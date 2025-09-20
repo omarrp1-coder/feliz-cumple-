@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>💖 Feliz cumpleaños, mi amor 💖</title>
+  <style>
+    :root{
+      --bg1:#ff9a9e;
+      --bg2:#fad0c4;
+      --bg3:#fad0c4;
+      --accent:#ff6f91;
+      --accent-2:#ffdde1;
+      --muted:#fff8;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
+    body{
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(-45deg,var(--bg1),var(--bg2),var(--bg3),#fbc2eb);
+      background-size:400% 400%;
+      animation: gradient 12s ease infinite;
+      display:flex;align-items:center;justify-content:center;padding:24px;color:#fff;overflow:hidden;
+    }
+    @keyframes gradient{
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+    .card{
+      max-width:850px;width:100%;background:rgba(255,255,255,0.08);
+      border-radius:20px;padding:32px;box-shadow:0 8px 40px rgba(0,0,0,0.3);
+      position:relative;overflow:hidden;
+    }
+    h1{font-size:38px;margin:0 0 12px;font-weight:700;text-align:center}
+    p.lead{font-size:18px;text-align:center;margin-bottom:20px}
+    .message{
+      background:rgba(255,255,255,0.1);
+      padding:20px;border-radius:14px;font-size:20px;line-height:1.6;min-height:160px;
+    }
+    .signature{text-align:right;font-weight:600;color:#ffe066;margin-top:12px}
+
+    /* corazones flotando */
+    .heart{position:absolute;color:rgba(255,255,255,0.7);font-size:22px;animation: floatUp 8s linear infinite}
+    @keyframes floatUp{
+      0%{transform:translateY(100vh) scale(0.6);opacity:0}
+      20%{opacity:1}
+      100%{transform:translateY(-20vh) scale(1);opacity:0}
+    }
+
+    /* regalo sorpresa */
+    .gift-box{margin:20px auto;width:80px;height:80px;position:relative;cursor:pointer}
+    .gift-box .box{width:100%;height:100%;background:var(--accent);border-radius:10px;position:absolute;bottom:0}
+    .gift-box .lid{width:100%;height:30px;background:var(--accent-2);border-radius:6px;position:absolute;top:-30px;transition:transform 0.4s}
+    .gift-box.open .lid{transform:translateY(-40px) rotate(-10deg)}
+    .hidden-message{display:none;text-align:center;font-size:18px;margin-top:10px}
+    .gift-box.open + .hidden-message{display:block;animation:fadeIn 1s forwards}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+    /* botones */
+    .controls{display:flex;justify-content:center;gap:14px;margin-top:20px}
+    button{background:linear-gradient(90deg,#ff6f91,#ffdde1);border:0;padding:10px 16px;border-radius:10px;font-weight:700;cursor:pointer;color:#520e27}
+    button:hover{opacity:0.9}
+
+    audio{margin-top:16px;width:100%}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🎂 Feliz cumpleaños, Pamela Iridian Gonzales Cacique 💕</h1>
+    <p class="lead">Feliz 17 primaveras, amor 🌸✨</p>
+
+    <div class="message" id="typed"></div>
+    <div class="signature">— Tu amor</div>
+
+    <div class="gift-box" id="gift">
+      <div class="box"></div>
+      <div class="lid"></div>
+    </div>
+    <div class="hidden-message">Siempre estaré contigo 💖</div>
+
+    <div class="controls">
+      <button id="confettiBtn">🎊 Confeti</button>
+      <button id="musicBtn">🎶 Nuestra canción</button>
+    </div>
+
+    <audio id="song" autoplay loop>
+      <source src="Morat - A dónde vamos (letra) [Q0eyG3QAvR8].mp3" type="audio/mpeg">
+      Tu navegador no soporta audio.
+    </audio>
+  </div>
+
+  <script>
+    // efecto máquina de escribir
+    const text = `Hoy celebramos tus 17 primaveras, un día especial para la persona más increíble de todas. Que este nuevo año de vida esté lleno de amor, alegría y sueños cumplidos. Gracias por iluminar mi vida con tu sonrisa y tu cariño. ¡Te amo! 💖`;
+    let i=0;
+    function typeWriter(){if(i<text.length){document.getElementById("typed").innerHTML += text.charAt(i);i++;setTimeout(typeWriter,40)}}
+    typeWriter();
+
+    // corazones flotando
+    function createHeart(){
+      const heart = document.createElement('div');
+      heart.className='heart';
+      heart.style.left = Math.random()*100+'vw';
+      heart.style.animationDuration = (6+Math.random()*4)+'s';
+      heart.innerText = '❤️';
+      document.body.appendChild(heart);
+      setTimeout(()=>heart.remove(),10000);
+    }
+    setInterval(createHeart,800);
+
+    // confeti simple
+    document.getElementById('confettiBtn').addEventListener('click',()=>{
+      for(let j=0;j<100;j++){
+        const conf = document.createElement('div');
+        conf.style.position='fixed';
+        conf.style.top='-10px';
+        conf.style.left=Math.random()*100+'vw';
+        conf.style.width='8px';
+        conf.style.height='14px';
+        conf.style.background=`hsl(${Math.random()*360},100%,60%)`;
+        conf.style.opacity='0.8';
+        conf.style.transform=`rotate(${Math.random()*360}deg)`;
+        conf.style.animation=`drop ${3+Math.random()*2}s linear forwards`;
+        document.body.appendChild(conf);
+        setTimeout(()=>conf.remove(),5000);
+      }
+    });
+
+    // animación confeti
+    const style = document.createElement('style');
+    style.textContent = `@keyframes drop {to{transform:translateY(100vh)}}`;
+    document.head.appendChild(style);
+
+    // regalo sorpresa
+    document.getElementById('gift').addEventListener('click',()=>{
+      document.getElementById('gift').classList.toggle('open');
+    });
+
+    // música (extra botón por si pausa)
+    document.getElementById('musicBtn').addEventListener('click',()=>{
+      const song=document.getElementById('song');
+      song.style.display='block';
+      song.play();
+    });
+  </script>
+</body>
+</html>
